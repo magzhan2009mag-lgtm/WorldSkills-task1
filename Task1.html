@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>9 Anime — Anime Movie</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+         :root {
+            --bg: #1E1E1E;
+            --bg-card: #2a2a2a;
+            --text: #f5f5f5;
+            --text-muted: #b0b0b0;
+            --accent: #6366f1;
+            --accent-hover: #818cf8;
+            --yellow: #fbbf24;
+        }
+        
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 3rem;
+            background: linear-gradient(to bottom, rgba(30, 30, 30, 0.95), transparent);
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2.5rem;
+        }
+        
+        .logo {
+            height: 42px;
+            width: auto;
+            display: block;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 1.8rem;
+            list-style: none;
+        }
+        
+        .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        .nav a.active {
+            color: var(--yellow);
+        }
+        
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .search-wrap {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 0.5rem 1rem;
+            gap: 0.5rem;
+        }
+        
+        .search-wrap input {
+            background: none;
+            border: none;
+            color: var(--text);
+            width: 160px;
+            font-size: 0.9rem;
+        }
+        
+        .search-wrap input::placeholder {
+            color: var(--text-muted);
+        }
+        
+        .icon-btn {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+            opacity: 0.9;
+        }
+        
+        .hero {
+            position: relative;
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            padding: 7rem 3rem 4rem;
+        }
+        
+        .hero-back {
+            position: absolute;
+            inset: 0;
+            background: var(--bg);
+        }
+        
+        .hero-back img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.85;
+        }
+        
+        .hero-back::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, rgba(30, 30, 30, 0.92) 0%, rgba(30, 30, 30, 0.4) 55%, transparent 75%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 520px;
+        }
+        
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-meta {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-desc {
+            color: var(--text);
+            line-height: 1.6;
+            margin-bottom: 1.25rem;
+            font-size: 1rem;
+        }
+        
+        .hero-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .stars {
+            color: var(--yellow);
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+        
+        .rating-text {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        
+        .btn-play {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 0.85rem 1.8rem;
+            border-radius: 50px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+        
+        .btn-play svg {
+            width: 20px;
+            height: 20px;
+        }
+        
+        .btn-add {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            background: rgba(255, 255, 255, 0.1);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+        
+        .hero-thumbs {
+            position: absolute;
+            bottom: 2rem;
+            left: 3rem;
+            right: 3rem;
+            display: flex;
+            gap: 0.5rem;
+            z-index: 2;
+        }
+        
+        .hero-thumbs img {
+            width: 120px;
+            height: 68px;
+            object-fit: cover;
+            border-radius: 8px;
+            border: 2px solid transparent;
+        }
+        
+        .genres {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0 3rem 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .genre-pill {
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            border: none;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+        
+        .genre-pill.active {
+            background: var(--yellow);
+            color: #1E1E1E;
+        }
+        
+        .section {
+            padding: 2rem 3rem 3rem;
+        }
+        
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+        
+        .view-all {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        
+        .poster-row {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scrollbar-width: thin;
+            scrollbar-color: var(--bg-card) var(--bg);
+        }
+        
+        .poster-row::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .poster-row::-webkit-scrollbar-thumb {
+            background: var(--bg-card);
+            border-radius: 3px;
+        }
+        
+        .poster-card {
+            flex: 0 0 160px;
+            text-align: center;
+        }
+        
+        .poster-card img {
+            width: 100%;
+            aspect-ratio: 2/3;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 0.6rem;
+        }
+        
+        .poster-card .name {
+            font-size: 0.9rem;
+            color: var(--text);
+            font-weight: 500;
+        }
+        
+        .featured-2 {
+            position: relative;
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            padding: 4rem 3rem;
+            margin: 2rem 0;
+        }
+        
+        .featured-2 .hero-back img {
+            opacity: 0.8;
+        }
+        
+        .featured-2 .hero-back::after {
+            background: linear-gradient(90deg, rgba(30, 30, 30, 0.9) 0%, rgba(30, 30, 30, 0.3) 60%, transparent 80%);
+        }
+        
+        footer {
+            background: var(--bg-card);
+            padding: 3rem 3rem 2rem;
+            margin-top: 2rem;
+        }
+        
+        .footer-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .footer-logo {
+            height: 40px;
+            width: auto;
+        }
+        
+        .follow {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .follow span {
+            margin-right: 0.25rem;
+        }
+        
+        .follow a {
+            color: var(--text);
+            text-decoration: none;
+            margin: 0 0.25rem;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+        }
+        
+        .footer-col h4 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+        
+        .footer-col a,
+        .footer-col span {
+            display: block;
+            color: var(--text);
+            text-decoration: none;
+            font-size: 0.9rem;
+            margin-bottom: 0.4rem;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="header-left">
+            <img class="logo" src="img/anime_logo.png" alt="9 Anime">
+            <nav>
+                <ul class="nav">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">TV Shows</a></li>
+                    <li><a href="#" class="active">Movie</a></li>
+                    <li><a href="#">Upcoming</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="header-right">
+            <div class="search-wrap">
+                <img class="icon-btn" src="img/search_4203984.png" alt="">
+                <input type="text" placeholder="Search Movie">
+            </div>
+            <img class="icon-btn" src="img/user_9340263.png" alt="Profile">
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-back">
+            <img src="img/Снимок экрана 2026-01-26 201819.png" alt="">
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">Your Name (Kimi no Na wa)</h1>
+            <p class="hero-meta">1 hr 52 min · Theme: Fate, long-distance love, time-travel</p>
+            <p class="hero-desc">Visually stunning, deeply emotional, with a magical connection between two strangers who fall in love without meeting.</p>
+            <div class="hero-rating">
+                <span class="stars">★★★★☆</span>
+                <span class="rating-text">8.0 RATING</span>
+            </div>
+            <div class="hero-buttons">
+                <button class="btn-play">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z" /></svg>
+                    PLAY
+                </button>
+                <button class="btn-add" title="Add to list">+</button>
+            </div>
+        </div>
+        <div class="hero-thumbs">
+            <img src="img/weathering with you.jpg" alt="">
+            <img src="img/the gaarden.jpg" alt="">
+            <img src="img/Charlote.jpg" alt="">
+            <img src="img/Orange.jpg" alt="">
+            <img src="img/From me to you.jpg" alt="">
+        </div>
+    </section>
+
+    <div class="genres">
+        <button class="genre-pill active">ALL</button>
+        <button class="genre-pill">Action</button>
+        <button class="genre-pill">Comedy</button>
+        <button class="genre-pill">Series</button>
+        <button class="genre-pill">Adventure</button>
+        <button class="genre-pill">Other</button>
+    </div>
+
+    <section class="section">
+        <div class="section-head">
+            <h2 class="section-title">Most Viewed</h2>
+            <a href="#" class="view-all">View All →</a>
+        </div>
+        <div class="poster-row">
+            <div class="poster-card"><img src="img/From me to you.jpg" alt=""><span class="name">From Me to You</span></div>
+            <div class="poster-card"><img src="img/Charlote.jpg" alt=""><span class="name">Charlotte</span></div>
+            <div class="poster-card"><img src="img/Just because.jpg" alt=""><span class="name">Just Because!</span></div>
+            <div class="poster-card"><img src="img/Snow white with the red hair.jpg" alt=""><span class="name">Snow White with the Red Hair</span></div>
+            <div class="poster-card"><img src="img/reLIFE.jpg" alt=""><span class="name">ReLIFE</span></div>
+            <div class="poster-card"><img src="img/Nana.jpg" alt=""><span class="name">NANA</span></div>
+            <div class="poster-card"><img src="img/Golden-Time.webp" alt=""><span class="name">Golden Time</span></div>
+            <div class="poster-card"><img src="img/Fruits basket.jpg" alt=""><span class="name">Fruits Basket</span></div>
+        </div>
+    </section>
+
+    <section class="hero featured-2">
+        <div class="hero-back">
+            <img src="img/Снимок экрана 2026-01-26 204058.png" alt="">
+        </div>
+        <div class="hero-content">
+            <h2 class="hero-title">Horimiya</h2>
+            <p class="hero-meta">1 hr 52 min · Theme: Fate, long-distance love, time-travel</p>
+            <p class="hero-desc">Visually stunning, deeply emotional, with a magical connection between two strangers who fall in love without meeting.</p>
+            <div class="hero-rating">
+                <span class="stars">★★★★☆</span>
+                <span class="rating-text">8.0 RATING</span>
+            </div>
+            <div class="hero-buttons">
+                <button class="btn-play">
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M8 5v14l11-7z" /></svg>
+                    PLAY
+                </button>
+                <button class="btn-add">+</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-head">
+            <h2 class="section-title">Popular TV Series</h2>
+            <a href="#" class="view-all">View All →</a>
+        </div>
+        <div class="poster-row">
+            <div class="poster-card"><img src="img/The girl.jpg" alt=""><span class="name">The Girl Who Leapt Through Time</span></div>
+            <div class="poster-card"><img src="img/say i love you.jpg" alt=""><span class="name">Say I Love You</span></div>
+            <div class="poster-card"><img src="img/the gaarden.jpg" alt=""><span class="name">The Garden of Words</span></div>
+            <div class="poster-card"><img src="img/weathering with you.jpg" alt=""><span class="name">Weathering With You</span></div>
+            <div class="poster-card"><img src="img/howl's.jpg" alt=""><span class="name">Howl's Moving Castle</span></div>
+            <div class="poster-card"><img src="img/grave.jpg" alt=""><span class="name">Grave of the Fireflies</span></div>
+            <div class="poster-card"><img src="img/plastic memories.jpg" alt=""><span class="name">Plastic Memories</span></div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-top">
+            <img class="footer-logo" src="img/anime_logo.png" alt="9 Anime">
+            <div class="follow">
+                <span>Follow Us On:</span>
+                <a href="#">G</a> <a href="#">X</a> <a href="#">K</a>
+            </div>
+        </div>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Movie</h4>
+                <a href="#">Action</a>
+                <a href="#">Comedy</a>
+                <a href="#">Horror</a>
+                <a href="#">Animation</a>
+                <a href="#">Fantasy</a>
+            </div>
+            <div class="footer-col">
+                <h4>Series</h4>
+                <a href="#">Reality Shows</a>
+                <a href="#">Classic Shows</a>
+                <a href="#">Valentine Day</a>
+                <a href="#">Comedy</a>
+                <a href="#">Fantasy</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <a href="#">General info</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of service</a>
+                <a href="#">Help Center</a>
+            </div>
+            <div class="footer-col">
+                <h4>Support</h4>
+                <span>support@anime.in</span>
+                <span>Tel: 012356478***</span>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
